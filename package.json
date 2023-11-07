@@ -1,0 +1,42 @@
+{
+  "name": "xstate-streams",
+  "version": "0.1.0",
+  "description": "XState Runtime for Streaming Data Platforms - supporting Kafka, Mongo, Cloudflare Queues, and PQueue",
+  "type": "module",
+  "types": "index.ts",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "vitest --globals"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drivly/xstate-streams.git"
+  },
+  "keywords": [
+    "kafka",
+    "mongo",
+    "mongodb",
+    "xstate",
+    "state",
+    "state-machine",
+    "queue",
+    "queues",
+    "p-queue"
+  ],
+  "author": "Nathan Clevenger & Samuel Lippert at Driv.ly",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drivly/xstate-streams/issues"
+  },
+  "homepage": "https://github.com/drivly/xstate-streams#readme",
+  "devDependencies": {
+    "kafkajs": "^2.2.4",
+    "mongodb": "^6.2.0",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  },
+  "dependencies": {
+    "p-queue": "^7.4.1",
+    "xstate": "^4.38.3"
+  }
+}
