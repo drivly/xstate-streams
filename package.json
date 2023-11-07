@@ -37,6 +37,6 @@
   },
   "dependencies": {
     "p-queue": "^7.4.1",
-    "xstate": "^4.38.3"
+    "xstate": "^5.0.0-beta.40"
   }
 }

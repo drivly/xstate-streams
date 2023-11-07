@@ -8,7 +8,7 @@ export let events: Collection
 export let queue: Collection
 export let actors: Collection
 
-export type DBConfig = {
+export type StreamConfig = {
   client: MongoClient
   db?: Db | string
   cache?: Collection | string

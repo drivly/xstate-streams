@@ -1,7 +1,6 @@
 import { BSON, ObjectId } from 'bson'
-import { DB } from '../db/mongo'
+import { QueueConfig, QueueInput } from './types'
 import PQueue from 'p-queue'
-import { chatCompletion, CompletionInput } from '../utils/completion'
 import { createMachine, createActor } from 'xstate'
 import { ChangeStreamInsertDocument, InsertOneResult, UpdateOneModel, UpdateResult } from 'mongodb'
 
@@ -30,14 +29,14 @@ export const startQueue = async (config: QueueConfig) => {
     { $match: { lockedBy: instance } },
   ]).on('change', async (change) => {
     const { _id, metadata, merge, target, ...input } = change.fullDocument
-    const completion = await queue.add(() => chatCompletion(input))
+    const completion = await queue.add(() => input) // TODO: Migrate to XState Actor.send(input)
     if (merge) {
       const coll = typeof merge === 'string' ? merge : merge.into 
       const match = typeof merge === 'string' ? undefined : merge.on
       // TODO: Add support to make completion optional, and specify field names for content, items, and functionData
       const mergeResult = match 
-        ? await db.db.collection(coll).updateOne(match, { $set: { completion, ...metadata ?? {} } })
-        : await db.db.collection(coll).insertOne({ completion, ...metadata ?? {} })
+        ? await db.database.collection(coll).updateOne(match, { $set: { completion, ...metadata ?? {} } })
+        : await db.database.collection(coll).insertOne({ completion, ...metadata ?? {} })
       if (mergeResult.acknowledged && (
           (mergeResult as UpdateResult).modifiedCount ||
           (mergeResult as InsertOneResult).insertedId)) {
